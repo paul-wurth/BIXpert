@@ -24,8 +24,8 @@ export interface LoginLayoutProps {
 export const LoginLayout = ({ children, branding }: React.PropsWithChildren<LoginLayoutProps>) => {
   const loginStyles = useStyles2(getLoginStyles);
   const [startAnim, setStartAnim] = useState(false);
-  const subTitle = branding?.loginSubtitle ?? Branding.GetLoginSubTitle();
-  const loginTitle = branding?.loginTitle ?? Branding.LoginTitle;
+  // const subTitle = branding?.loginSubtitle ?? Branding.GetLoginSubTitle();
+  // const loginTitle = branding?.loginTitle ?? Branding.LoginTitle;
   const loginBoxBackground = branding?.loginBoxBackground || Branding.LoginBoxBackground();
   const loginLogo = branding?.loginLogo;
 
@@ -39,8 +39,8 @@ export const LoginLayout = ({ children, branding }: React.PropsWithChildren<Logi
         <div className={loginStyles.loginLogoWrapper}>
           <Branding.LoginLogo className={loginStyles.loginLogo} logo={loginLogo} />
           <div className={loginStyles.titleWrapper}>
-            <h1 className={loginStyles.mainTitle}>{loginTitle}</h1>
-            {subTitle && <h3 className={loginStyles.subTitle}>{subTitle}</h3>}
+            {/* <h1 className={loginStyles.mainTitle}>{loginTitle}</h1> */}
+            {/* {subTitle && <h3 className={loginStyles.subTitle}>{subTitle}</h3>} */}
           </div>
         </div>
         <div className={loginStyles.loginOuterBox}>{children}</div>
@@ -89,19 +89,13 @@ export const getLoginStyles = (theme: GrafanaTheme2) => {
     `,
     loginLogo: css`
       width: 100%;
-      max-width: 60px;
-      margin-bottom: 15px;
-
-      @media ${styleMixins.mediaUp(theme.v1.breakpoints.sm)} {
-        max-width: 100px;
-      }
+      border-radius: 8px 8px 0 0;
     `,
     loginLogoWrapper: css`
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      padding: ${theme.spacing(3)};
     `,
     titleWrapper: css`
       text-align: center;
@@ -128,7 +122,7 @@ export const getLoginStyles = (theme: GrafanaTheme2) => {
       z-index: 1;
       min-height: 320px;
       border-radius: ${theme.shape.borderRadius(4)};
-      padding: ${theme.spacing(2, 0)};
+      padding: ${theme.spacing(0, 0, 2)};
       opacity: 0;
       transition: opacity 0.5s ease-in-out;
 
