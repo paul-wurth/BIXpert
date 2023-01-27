@@ -20,7 +20,7 @@ COPY emails emails
 ENV NODE_ENV production
 RUN yarn build
 
-FROM golang:1.19.4-alpine3.15 as go-builder
+FROM golang:1.19.4-alpine3.17 as go-builder
 
 RUN apk add --no-cache gcc g++ make
 
@@ -33,6 +33,7 @@ COPY public/api-spec.json public/api-spec.json
 COPY pkg pkg
 COPY scripts scripts
 COPY cue.mod cue.mod
+COPY kinds kinds
 COPY .bingo .bingo
 
 RUN go mod verify
