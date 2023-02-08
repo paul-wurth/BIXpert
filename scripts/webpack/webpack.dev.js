@@ -51,6 +51,7 @@ module.exports = (env = {}) =>
 
     // https://webpack.js.org/guides/build-performance/#output-without-path-info
     output: {
+      filename: '[name].js',
       pathinfo: false,
     },
 
