@@ -1,3 +1,4 @@
+import { css } from '@emotion/css';
 import React from 'react';
 
 import { LinkTarget } from '@grafana/data';
@@ -112,6 +113,11 @@ export const Footer = React.memo(({ customLinks }: Props) => {
             </li>
           ))}
         </ul>
+        <div className={styles.bixpertLink}>
+          BIXpert is a modified version of Grafana® open source software. The code of BIXpert is publicly
+          available&nbsp;
+          <a href="https://github.com/paul-wurth/BIXpert">here</a>
+        </div>
       </div>
     </footer>
   );
@@ -134,3 +140,9 @@ function FooterItem({ item }: { item: FooterLink }) {
     </>
   );
 }
+
+const styles = {
+  bixpertLink: css({
+    marginTop: 2,
+  }),
+};
