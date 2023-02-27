@@ -20,6 +20,7 @@ e2e.scenario({
       '__user.id = 1',
       '__user.login = admin',
       '__user.email = admin@localhost',
+      '__user.locale = en-US',
       `Server:raw = A'A"A,BB\\B,CCC`,
       `Server:regex = (A'A"A|BB\\\\B|CCC)`,
       `Server:lucene = ("A'A\\"A" OR "BB\\\\B" OR "CCC")`,

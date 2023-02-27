@@ -236,6 +236,7 @@ export const addSystemTemplateVariables = (key: string, dashboard: DashboardMode
           login: contextSrv.user.login,
           id: contextSrv.user.id,
           email: contextSrv.user.email,
+          locale: contextSrv.user.locale,
           toString: () => contextSrv.user.id.toString(),
         },
       },

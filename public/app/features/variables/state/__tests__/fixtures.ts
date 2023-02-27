@@ -139,6 +139,7 @@ export function createUserVariable(input: Partial<UserVariableModel> = {}): User
         login: 'biggus-chungus',
         id: 0,
         email: 'chungus@example.com',
+        locale: 'en-US',
       },
     },
     ...input,
