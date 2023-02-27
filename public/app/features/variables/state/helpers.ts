@@ -76,6 +76,7 @@ export const getVariableState = (
           login: 'admin',
           id: 1,
           email: 'admin@test',
+          locale: 'en-US',
           toString: () => '1',
         },
       },
