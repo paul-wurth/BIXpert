@@ -1,12 +1,11 @@
-import React from 'react';
 import { Observable, Subject } from 'rxjs';
 
 import { queryMetricTree } from 'app/plugins/datasource/testdata/metricTree';
 
+import { sceneGraph } from '../../core/sceneGraph';
 import { SceneComponentProps } from '../../core/types';
 import { VariableDependencyConfig } from '../VariableDependencyConfig';
-import { VariableValueSelect } from '../components/VariableValueSelect';
-import { sceneTemplateInterpolator } from '../sceneTemplateInterpolator';
+import { renderSelectForVariable } from '../components/VariableValueSelect';
 import { VariableValueOption } from '../types';
 
 import { MultiValueVariable, MultiValueVariableState, VariableGetOptionsArgs } from './MultiValueVariable';
@@ -23,18 +22,33 @@ export interface TestVariableState extends MultiValueVariableState {
 export class TestVariable extends MultiValueVariable<TestVariableState> {
   private completeUpdate = new Subject<number>();
   public isGettingValues = true;
+  public getValueOptionsCount = 0;
 
   protected _variableDependency = new VariableDependencyConfig(this, {
     statePaths: ['query'],
   });
 
+  public constructor(initialState: Partial<TestVariableState>) {
+    super({
+      type: 'custom',
+      name: 'Test',
+      value: 'Value',
+      text: 'Text',
+      query: 'Query',
+      options: [],
+      ...initialState,
+    });
+  }
+
   public getValueOptions(args: VariableGetOptionsArgs): Observable<VariableValueOption[]> {
     const { delayMs } = this.state;
+
+    this.getValueOptionsCount += 1;
 
     return new Observable<VariableValueOption[]>((observer) => {
       this.setState({ loading: true });
 
-      this.completeUpdate.subscribe({
+      const sub = this.completeUpdate.subscribe({
         next: () => {
           observer.next(this.issueQuery());
         },
@@ -49,6 +63,7 @@ export class TestVariable extends MultiValueVariable<TestVariableState> {
       this.isGettingValues = true;
 
       return () => {
+        sub.unsubscribe();
         clearTimeout(timeout);
         this.isGettingValues = false;
       };
@@ -56,7 +71,7 @@ export class TestVariable extends MultiValueVariable<TestVariableState> {
   }
 
   private issueQuery() {
-    const interpolatedQuery = sceneTemplateInterpolator(this.state.query, this);
+    const interpolatedQuery = sceneGraph.interpolate(this, this.state.query);
     const options = queryMetricTree(interpolatedQuery).map((x) => ({ label: x.name, value: x.name }));
 
     this.setState({
@@ -73,6 +88,6 @@ export class TestVariable extends MultiValueVariable<TestVariableState> {
   }
 
   public static Component = ({ model }: SceneComponentProps<MultiValueVariable>) => {
-    return <VariableValueSelect model={model} />;
+    return renderSelectForVariable(model);
   };
 }

@@ -121,14 +121,6 @@ _sharedKind: {
 }
 
 // TODO
-#CustomStructured: {
-	#Structured
-
-	lineageIsGroup: false
-	...
-}
-
-// TODO
 #CoreStructured: {
 	#Structured
 
@@ -163,4 +155,3 @@ _sharedKind: {
 	// It is required that lineage.name is the same as the [machineName].
 	lineage: thema.#Lineage & { name: S.machineName }
 }
-
